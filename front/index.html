@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
   <head>
-      <link href="https://s3.amazonaws.com/codecademy-content/projects/bootstrap.min.css" rel="stylesheet" />
+      <link href="css/bootstrap.min.css" rel="stylesheet" />
     <link href='https://fonts.googleapis.com/css?family=Roboto:500,300,700,400' rel='stylesheet' type='text/css'>
     <link href="css/main.css" rel="stylesheet" />
 
@@ -14,17 +14,41 @@
   <body ng-app="myApp">
     <div class="header">
       <div class="container">
-        <h1>VélÔ'Toulouse - Big Data analysis</h1>
+        <h1>VélÔ'Toulouse – Big Data analysis</h1>
       </div>
     </div>
 
     <div class="main" ng-controller="MainController">
       <div class="container">
 
-        <h1>{{ title }}</h1>
+        <h2>{{ whatIsItTitle }}</h2>
+        <p>{{ whatIsItText }}</p>
+
+        <div class="map">
+          <!-- Map that will gather its data directly from the API, no need to go through our own DB for that 
+          -> https://api.jcdecaux.com/vls/v1/stations?contract=Toulouse&apiKey=apiKey 
+
+          Need to find a way to gather the data without compromising the api key -->
+        </div>
+
+        <!-- Invisible while the user doesn't select a station on the map -->
+        <div class="stationInfo col-md-6"> 
+          <h4 class="name">{{ station.name }}</h4> 
+          <p class="address">{{ station.address }}</p> 
+
+          <p class="availableBikes">Currently available bikes: {{ station.available_bikes }}</p>
+          <p class="availableBikesStands">Currently available bike stands: {{ station.available_bike_stands }}</p>
+          <p class="total">Total bike stands: {{ station.bike_stands }}</p>
+
+          <!-- Add a 'extra information' button that opens up all the unnecessary information about the station -->
+
+          <p class="updateDate">{{ station.last_update | date }}</p> 
+        </div>
 
       </div>
     </div>
+
+
 
 
     <!-- Modules -->
