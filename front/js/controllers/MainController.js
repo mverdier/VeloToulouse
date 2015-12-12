@@ -1,6 +1,8 @@
-app.controller('MainController', ['$scope', function($scope) {
+app.controller('MainController', ['$scope', '$http', 'stationList', function($scope, $http, stationList) {
 
 	$scope.locale = 'enUS';
+
+	$scope.stations = [];
 
 	if ($scope.locale == 'enUS') {
 		$scope.whatIsItTitle = 'What is it?';
@@ -8,21 +10,44 @@ app.controller('MainController', ['$scope', function($scope) {
 	}
 
 
-	$scope.station = {  
-	   "number":55,
-	   "name":"00055 - ST SERNIN G. ARNOULT",
-	   "address":"2 RUE GATIEN ARNOULT",
-	   "position":{  
-	      "lat":43.608951960496405,
-	      "lng":1.441003598726198
-	   },
-	   "banking":true,
-	   "bonus":false,
-	   "status":"OPEN",
-	   "contract_name":"Toulouse",
-	   "bike_stands":15,
-	   "available_bike_stands":11,
-	   "available_bikes":4,
-	   "last_update":1449875929000
-	};
+
+	//Initializing GMap
+	var mapCanvas = document.getElementById('map');
+	var mapOptions = {
+      center: new google.maps.LatLng(43.6008912,1.4389252),
+      zoom: 12,
+      mapTypeId: google.maps.MapTypeId.ROADMAP,
+      streetViewControl: false
+    };
+   	var map = new google.maps.Map(mapCanvas, mapOptions);
+
+   	var stationLocations = [];
+	stationList.success(function(data) { 
+
+	    $scope.stations = data; 
+	    
+	    for (i = 0; i < data.length; i++) {
+
+	   		var marker = new google.maps.Marker({
+	   			position: new google.maps.LatLng(data[i].position.lat, data[i].position.lng),
+	   			map: map,
+	   			number: data[i].number
+	   		})
+
+	   		google.maps.event.addListener(marker, 'click', function() {
+
+	   			$http.get('https://api.jcdecaux.com/vls/v1/stations/' + this.number + '?contract=Toulouse&apiKey=eb86bdd7ffe3afcd9c7e6babdcf837af420146f4') 
+		            .success(function(data) { 
+		            	$scope.currentStation = data;
+		            }) 
+		            .error(function(err) { 
+		            	console.log(err); 
+		            }); 
+	   		});
+
+	   		stationLocations[i] = marker;
+	   	}
+	})
+
+
 }]);
