@@ -44,42 +44,6 @@
 
           <p class="updateDate">{{ currentStation.last_update | date }}</p> 
         </div>
-
-
-
-        <table class="col-md-10">
-          <tr>
-            <th>Number</th>
-            <th>Name</th>
-            <th>Address</th>
-
-            <th>Banking</th>
-            <th>Bonus</th>
-            <th>Status</th>
-
-            <th>Total bike stands</th>
-            <th>Available bike stands</th>
-            <th>Available bikes</th>
-
-            <th>Last update</th>
-          </tr>
-          <tr ng-repeat="station in stations">
-            <td>{{ station.number }}</td>
-            <td>{{ station.name }}</td>
-            <td>{{ station.address }}</td>
-
-            <td>{{ station.banking }}</td>
-            <td>{{ station.bonus }}</td>
-            <td>{{ station.status }}</td>
-
-            <td>{{ station.bike_stands }}</td>
-            <td>{{ station.available_bike_stands }}</td>
-            <td>{{ station.available_bikes }}</td>
-
-            <td>{{ station.last_update | date }}</td>
-          </tr>
-        </table>
-
       </div>
     </div>
 
