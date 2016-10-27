@@ -1,70 +1,67 @@
 <!doctype html>
 <html>
-  <head>
-      <link href="css/bootstrap.min.css" rel="stylesheet" />
-    <link href='https://fonts.googleapis.com/css?family=Roboto:500,300,700,400' rel='stylesheet' type='text/css'>
-    <link href="css/main.css" rel="stylesheet" />
+	<head>
+		<link href="css/bootstrap.min.css" rel="stylesheet" />
+		<link href='https://fonts.googleapis.com/css?family=Roboto:500,300,700,400' rel='stylesheet' type='text/css'>
+		<link href="css/main.css" rel="stylesheet" />
 
-    <!-- Include the AngularJS library -->
-    <script src="js/angular.min.js"></script>
+		<!-- Include the AngularJS library -->
+		<script src="js/angular.min.js"></script>
 
-    <!-- Including the Google Maps API -->
-    <script src="https://maps.googleapis.com/maps/api/js"></script>
+		<!-- Including the Google Maps API -->
+		<script src="https://maps.googleapis.com/maps/api/js"></script>
 
-    <meta charset="UTF-8">
-    <title>Big VélÔ'Toulouse</title>
-  </head>
-  <body ng-app="myApp">
-    <div class="header">
-      <div class="container">
-        <h1>VélÔ'Toulouse – Big Data analysis</h1>
-      </div>
-    </div>
+		<meta charset="UTF-8">
+		<title>Big VélÔ'Toulouse</title>
+	</head>
+	
+	<body ng-app="myApp">
+		<div class="header">
+			<div class="container">
+				<h1>VélÔ'Toulouse – Big Data analysis</h1>
+			</div>
+		</div>
 
-    <div class="main" ng-controller="MainController">
-      <div class="container">
+		<div class="main" ng-controller="MainController">
+			<div class="container">
 
-        <div id="locales">
-          FR EN
-        </div>
+				<div id="locales">
+					FR EN
+				</div>
 
-        <h2>{{ whatIsItTitle }}</h2>
-        <p>{{ whatIsItText }}</p>
+				<h2>{{ whatIsItTitle }}</h2>
+				<p>{{ whatIsItText }}</p>
 
-        <div id="map">
+				<div id="map"></div>
 
-        </div>
+				<!-- Invisible while the user doesn't select a station on the map -->
+				<div id="stationInfo" class="col-md-6" ng-if="currentStation !== undefined"> 
+					<h4 class="name">{{ currentStation.name }}</h4> 
+					<p class="address">{{ currentStation.address }}</p> 
 
-        <!-- Invisible while the user doesn't select a station on the map -->
-        <div id="stationInfo" class="col-md-6" ng-if="currentStation !== undefined"> 
-          <h4 class="name">{{ currentStation.name }}</h4> 
-          <p class="address">{{ currentStation.address }}</p> 
+					<p class="availableBikes">Currently available bikes: {{ currentStation.available_bikes }}</p>
+					<p class="availableBikesStands">Currently available bike stands: {{ currentStation.available_bike_stands }}</p>
+					<p class="total">Total bike stands: {{ currentStation.bike_stands }}</p>
 
-          <p class="availableBikes">Currently available bikes: {{ currentStation.available_bikes }}</p>
-          <p class="availableBikesStands">Currently available bike stands: {{ currentStation.available_bike_stands }}</p>
-          <p class="total">Total bike stands: {{ currentStation.bike_stands }}</p>
+					<!-- Add a 'extra information' button that opens up all the unnecessary information about the station -->
 
-          <!-- Add a 'extra information' button that opens up all the unnecessary information about the station -->
+					<p class="updateDate">{{ currentStation.last_update | date }}</p> 
+				</div>
+			</div>
+		</div>
 
-          <p class="updateDate">{{ currentStation.last_update | date }}</p> 
-        </div>
-      </div>
-    </div>
+		<!-- Modules -->
+		<script src="js/app.js"></script>
 
+		<!-- Controllers -->
+		<script src="js/controllers/MainController.js"></script>
 
+		<!-- Services -->
+		<script src="js/services/stationList.js"></script>
+		<script src="js/services/stationStatus.js"></script>
 
-    <!-- Modules -->
-    <script src="js/app.js"></script>
-
-    <!-- Controllers -->
-    <script src="js/controllers/MainController.js"></script>
-
-    <!-- Services -->
-    <script src="js/services/stationList.js"></script>
-    <script src="js/services/stationStatus.js"></script>
-
-    <!-- Setting up the map -->
-    <script src="js/gMaps.js"></script>
-
-  </body>
+		<!-- Setting up the map -->
+		<script src="js/gMaps.js"></script>
+		
+	</body>
 </html>
